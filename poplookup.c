@@ -97,7 +97,12 @@ unsigned long hash(char *str) {
  * returns:    NULL if not found
  */
 node *node_lookup(node *front, char *city, char *state, int pop) {
-	// TODO: FILL THIS OUT
+	// TODO: delete suppression below and implement function
+	// suppresses warnings before implementation
+	(void) front;
+	(void) city;
+	(void) state;
+	(void) pop;
 	return NULL;
 }
 
@@ -111,7 +116,12 @@ node *node_lookup(node *front, char *city, char *state, int pop) {
  * returns: a pointer to the new head of the chain and NULL if the insert fails
  */
 node *add_front(node *front, char *city, char *state, int pop) {
-	// TODO: FILL THIS OUT
+	// TODO: delete suppression below and implement function
+	// suppresses warnings before implementation
+	(void) front;
+	(void) city;
+	(void) state;
+	(void) pop;
 	return NULL;
 }
 
@@ -125,14 +135,18 @@ node *add_front(node *front, char *city, char *state, int pop) {
  *            If no such node exists in the table, print an error message.
  */
 void print_population(node **table, char *str, unsigned long size, bool hash_by_city) {
+	// TODO: delete body below and implement function
 	/*
-	 * TODO: FILL THIS OUT
-	 *
 	 * Use these format strings as given.
 	 *
-	 * printf("Unable to find any %s by the name of %s.\n", <arg1>, <arg2> );
+	 * printf("Unable to find any %s by the name of %s.\n", <arg1>, <arg2>);
 	 * printf("Minimum: %d\tMaximum: %d\tAverage: %d\n", <arg1>, <arg2>, <arg3>);
 	 */
+	// suppresses warnings before implementation
+	(void) table;
+	(void) str;
+	(void) size;
+	(void) hash_by_city;
 }
 
 /*
@@ -150,14 +164,18 @@ void print_population(node **table, char *str, unsigned long size, bool hash_by_
  *             Returns 0 if all ok, 1 otherwise
  */
 int load_table(node **table, unsigned long size, char *filename, bool hash_by_city) {
+	// TODO: delete body below and implement function
 	/*
-	 * TODO: FILL THIS OUT
-	 *
 	 * Use these format strings as given
 	 *
 	 * fprintf(stderr, "load_table duplicate entry: %s %s %d\n", <arg1>, <arg2>, <arg3>);
 	 * fprintf(stderr, "load_table could not add %s\n", <arg>);
 	 */
+	// suppresses warnings before implementation
+	(void) table;
+	(void) size;
+	(void) filename;
+	(void) hash_by_city;
 	return 1;
 }
 
@@ -272,9 +290,8 @@ bool parse_opts(
  *	      3. prints this to stderr
  */
 void print_info(node **table, unsigned long size) {
+	// TODO: delete body below and implement function
 	/*
-	 * TODO: FILL THIS OUT
-	 *
 	 * Use these format strings as given
 	 *
 	 * printf("Table size: %lu\n", <arg>);
@@ -283,6 +300,9 @@ void print_info(node **table, unsigned long size) {
 	 * printf("Shortest chain: %lu\n", <arg>);
 	 * printf("Empty buckets: %lu\n", <arg>);
 	 */
+	// suppresses warnings before implementation
+	(void) table;
+	(void) size;
 }
 
 /*
@@ -295,5 +315,8 @@ void print_info(node **table, unsigned long size) {
  *
  */
 void delete_table(node **table, unsigned long size) {
-	// TODO: FILL THIS OUT
+	// TODO: delete suppression below and implement function
+	// suppresses warnings before implementation
+	(void) table;
+	(void) size;
 }
