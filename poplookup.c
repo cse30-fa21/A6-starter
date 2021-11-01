@@ -98,6 +98,7 @@ unsigned long hash(char *str) {
  */
 node *node_lookup(node *front, char *city, char *state, int pop) {
 	// TODO: FILL THIS OUT
+	return NULL;
 }
 
 /*
@@ -111,6 +112,7 @@ node *node_lookup(node *front, char *city, char *state, int pop) {
  */
 node *add_front(node *front, char *city, char *state, int pop) {
 	// TODO: FILL THIS OUT
+	return NULL;
 }
 
 /*
@@ -156,6 +158,7 @@ int load_table(node **table, unsigned long size, char *filename, bool hash_by_ci
 	 * fprintf(stderr, "load_table duplicate entry: %s %s %d\n", <arg1>, <arg2>, <arg3>);
 	 * fprintf(stderr, "load_table could not add %s\n", <arg>);
 	 */
+	return 1;
 }
 
 /*
