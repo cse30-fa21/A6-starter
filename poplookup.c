@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	// indicates if the hash is to be done by city or state
 	int hash_by_city = -1;
 
-	if (parse_opts(argc, argv, &filename, &size, &info, &city, &state, &hash_by_city)) {
+	if (!parse_opts(argc, argv, &filename, &size, &info, &city, &state, &hash_by_city)) {
 		return EXIT_FAILURE;
 	}
 
@@ -173,10 +173,10 @@ int load_table(node **table, unsigned long size, char *filename, int hash_by_cit
  *            -c copies the city name to city
  *            -s copies the state name to state
  *            copies the name of the file to filename
- * returns:   a 0 if all ok, 1 otherwise
+ * returns:   true if success and false otherwise
  * !!! DO NOT EDIT THIS FUNCTION !!!
  */
-int parse_opts(
+bool parse_opts(
 	int argc,
 	char* argv[],
 	char** filename,
@@ -188,7 +188,7 @@ int parse_opts(
 ) {
 	int opt;
 	char *endptr;
-	int eFlag = 0;
+	bool fail = false;
 	extern int errno;
 
 	opterr = 0;
@@ -212,7 +212,7 @@ int parse_opts(
 						argv[0],
 						MINTABSZ
 					);
-					eFlag = 1;
+					fail = true;
 				}
 				break;
 			case 'c':
@@ -221,7 +221,7 @@ int parse_opts(
 					*hash_by_city = 1;
 				} else {
 					fprintf(stderr, "%s: Cannot query both a city and a state\n", argv[0]);
-					eFlag = 1;
+					fail = true;
 				}
 				break;
 			case 's':
@@ -230,13 +230,13 @@ int parse_opts(
 					*hash_by_city = 0;
 				} else {
 					fprintf(stderr, "%s: Cannot query both a city and a state\n", argv[0]);
-					eFlag = 1;
+					fail = true;
 				}
 				break;
 			case '?':
 				fprintf(stderr, "%s: unknown option -%c\n", argv[0], optopt);
 			default:
-				eFlag = 1;
+				fail = true;
 				break;
 		}
 	}
@@ -244,18 +244,17 @@ int parse_opts(
 	*filename = argv[optind];
 	if (*filename == NULL) {
 		fprintf(stderr, "%s: filename is required\n", argv[0]);
-		eFlag = 1;
+		fail = true;
 	}
 	if (*city == NULL && *state == NULL) {
 		fprintf(stderr, "%s: -c city or -s state is required\n", argv[0]);
-		eFlag = 1;
+		fail = true;
 	}
-	if (eFlag) {
+	if (fail) {
 		fprintf(stderr, "Usage: %s [-i] [-t tablesize] [-c city]/[-s state] filename\n", argv[0]);
-		eFlag = 1;
 	}
 
-	return eFlag;
+	return !fail;
 }
 
 /*

@@ -25,7 +25,7 @@ extern node *node_lookup(node *front, char *city, char *state, int pop);
 extern node *add_front(node *front, char *city, char *state, int pop);
 extern unsigned long hash(char *str);
 extern void print_info(node **table, unsigned long size);
-extern int parse_opts(
+extern bool parse_opts(
 	int argc,
 	char *argv[],
 	char **filename,
