@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	if (load_table(table, size, filename, hash_by_city)) {
+	if (!load_table(table, size, filename, hash_by_city)) {
 		return EXIT_FAILURE;
 	}
 
@@ -259,9 +259,9 @@ void print_population(node **table, char *str, unsigned long size, bool hash_by_
  *             calls add_front() to insert it into the table
  *             if unable to allocate memory, fprintf to stderr
  *             closes the file frees the buffer created by getline()
- *             Returns 0 if all ok, 1 otherwise
+ *             Returns true if successful, and false otherwise.
  */
-int load_table(node **table, unsigned long size, char *filename, bool hash_by_city) {
+bool load_table(node **table, unsigned long size, char *filename, bool hash_by_city) {
 	// TODO: delete body below and implement function
 	/*
 	 * Use these format strings as given
@@ -274,7 +274,7 @@ int load_table(node **table, unsigned long size, char *filename, bool hash_by_ci
 	(void) size;
 	(void) filename;
 	(void) hash_by_city;
-	return 1;
+	return false;
 }
 
 /*

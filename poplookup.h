@@ -32,5 +32,5 @@ extern bool parse_opts(
 	char **state,
 	bool *hash_by_city
 );
-extern int load_table(node **table, unsigned long size, char *filename, bool hash_by_city);
+extern bool load_table(node **table, unsigned long size, char *filename, bool hash_by_city);
 extern void delete_table(node **table, unsigned long size);
