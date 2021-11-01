@@ -36,14 +36,13 @@ int main(int argc, char *argv[]) {
 	char *city;
 	char *state;
 	// indicates if the hash is to be done by city or state
-	int hash_by_city = -1;
+	bool hash_by_city = true;
 
 	if (!parse_opts(argc, argv, &filename, &size, &info, &city, &state, &hash_by_city)) {
 		return EXIT_FAILURE;
 	}
 
-	if ((table = calloc(size, sizeof(node *))) == NULL)
-	{
+	if ((table = calloc(size, sizeof(node*))) == NULL) {
 		fprintf(stderr, "%s: Unable to allocate space for hash table\n", argv[0]);
 		return EXIT_FAILURE;
 	}
@@ -123,7 +122,7 @@ node *add_front(node *front, char *city, char *state, int pop) {
  *            prints maximum, minimum and average population of the chain
  *            If no such node exists in the table, print an error message.
  */
-void print_population(node **table, char *str, unsigned long size, int hash_by_city) {
+void print_population(node **table, char *str, unsigned long size, bool hash_by_city) {
 	/*
 	 * TODO: FILL THIS OUT
 	 *
@@ -148,7 +147,7 @@ void print_population(node **table, char *str, unsigned long size, int hash_by_c
  *             closes the file frees the buffer created by getline()
  *             Returns 0 if all ok, 1 otherwise
  */
-int load_table(node **table, unsigned long size, char *filename, int hash_by_city) {
+int load_table(node **table, unsigned long size, char *filename, bool hash_by_city) {
 	/*
 	 * TODO: FILL THIS OUT
 	 *
@@ -184,7 +183,7 @@ bool parse_opts(
 	bool* info,
 	char** city,
 	char** state,
-	int *hash_by_city
+	bool *hash_by_city
 ) {
 	int opt;
 	char *endptr;
@@ -216,7 +215,7 @@ bool parse_opts(
 				}
 				break;
 			case 'c':
-				if (*hash_by_city == -1) {
+				if (*hash_by_city) {
 					*city = optarg;
 					*hash_by_city = 1;
 				} else {
@@ -225,7 +224,7 @@ bool parse_opts(
 				}
 				break;
 			case 's':
-				if (*hash_by_city == -1) {
+				if (*hash_by_city) {
 					*state = optarg;
 					*hash_by_city = 0;
 				} else {

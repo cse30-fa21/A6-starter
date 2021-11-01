@@ -17,7 +17,7 @@ typedef struct node {
 	struct node* next;
 } node;
 
-extern void print_population(node **table, char *str, unsigned long size, int hash_by_city);
+extern void print_population(node **table, char *str, unsigned long size, bool hash_by_city);
 extern node *node_lookup(node *front, char *city, char *state, int pop);
 extern node *add_front(node *front, char *city, char *state, int pop);
 extern unsigned long hash(char *str);
@@ -30,7 +30,7 @@ extern bool parse_opts(
 	bool *info,
 	char **city,
 	char **state,
-	int *hash_by_city
+	bool *hash_by_city
 );
-extern int load_table(node **table, unsigned long size, char *filename, int hash_by_city);
+extern int load_table(node **table, unsigned long size, char *filename, bool hash_by_city);
 extern void delete_table(node **table, unsigned long size);
