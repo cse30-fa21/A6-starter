@@ -21,7 +21,7 @@
  * Operation: Main driver for the program, calls other funttions to:
  *	          parse the options, allocate the hashtable, load the table, print out the table stats
  *            and make print population stats of the desired city/state
- * Returns:   EXIT_SUCESS if all ok, EXIT_FAILURE otherwise
+ * Returns:   EXIT_SUCCESS if all ok, EXIT_FAILURE otherwise
  * !!! DO NOT EDIT THIS FUNCTION !!!
  */ 
 int main(int argc, char *argv[])
@@ -86,80 +86,6 @@ unsigned long hash(char *str)
 }
 
 /*
- * node_lookup 
- *
- * Arguments: hash chain pointer head; name of city, name of state, population
- *
- * Operation: walks the chain looking for a node that has the same city, state and population
- *            returns a pointer to the node in the chain that has the the same city, state and population
- * returns:    NULL if not found
- */
-node *node_lookup(node *front, char *city, char *state, int pop) 
-{
-  // TODO: FILL THIS OUT
-}
-
-/*
- * add_front
- *
- * Arguments: hash chain pointer head, city, state, population
- *
- * Operation: inserts a new node with the given data at the front of the chain
- *
- * returns: a pointer to the new head of the chain and NULL if the insert fails 
- */
-node *add_front(node *front, char *city, char *state, int pop)
-{
-  // TODO: FILL THIS OUT
-}
-
-/*
- * print_population 
- *
- * Arguments: hash chain pointer head, str string, hash table size, hash by city or state
- *
- * Operation: walks the chain looking for a node that has the city/state name
- *            prints maximum, minimum and average population of the chain
- *            If no such node exists in the table, print an error message.
- */
-void print_population(node **htable, char *str, unsigned long tabsz, int hash_by_city) 
-{
-  /*
-   * TODO: FILL THIS OUT
-   *
-   * Use these format strings as given.
-   *
-   * printf("Unable to find any %s by the name of %s.\n", <arg1>, <arg2> );
-   * printf("Minimum: %d\tMaximum: %d\tAverage: %d\n", <arg1>, <arg2>, <arg3>);
-   */
-}
-
-/*
- * load_table
- *
- * Arguments: pointer to hash table, hash table size, file name, hash by city or state
- *
- * Operation:  opens the csv file with "r",
- *             reads while getline() > 0, each line from the file, and stores city, states and population
- *             hashes the city/state name to find the chain            
- *             calls add_front() to insert it into the table
- *             if unable to allocate memory, fprintf to stderr
- *             closes the file frees the buffer created by getline()
- *             Returns 0 if all ok, 1 otherwise
- */
-int load_table(node **htable, unsigned long tabsz, char *filename, int hash_by_city)
-{
-  /*
-   * TODO: FILL THIS OUT
-   *
-   * Use these format strings as given
-   *
-   * fprintf(stderr, "load_table duplicate entry: %s %s %d\n", <arg1>, <arg2>, <arg3>);
-   * fprintf(stderr, "load_table could not add %s\n", <arg>);
-   */
-}
-
-/*
  * !!! DO NOT EDIT THIS FUNCTION !!!
  * parse_opts
  *
@@ -172,7 +98,7 @@ int load_table(node **htable, unsigned long tabsz, char *filename, int hash_by_c
  *            -c copies the city name to city
  *            -s copies the state name to state
  *            copies the name of the file to filename
- * returns:   a 0 if all ok, 1 otherwise
+ * returns:   0 if all ok, 1 otherwise
  * !!! DO NOT EDIT THIS FUNCTION !!!
  */
 int parse_opts(int argc, char *argv[], char **filename, unsigned long *tabsz, int *info, char **city, char **state, int *hash_by_city)
@@ -246,14 +172,63 @@ int parse_opts(int argc, char *argv[], char **filename, unsigned long *tabsz, in
 }
 
 /*
+ * node_lookup 
+ *
+ * Arguments: linked list chain pointer head, name of city, name of state, population
+ */
+node *node_lookup(node *front, char *city, char *state, int pop) 
+{
+  // TODO: FILL THIS OUT
+}
+
+/*
+ * add_front
+ *
+ * Arguments: linked list pointer head, city, state, population
+ */
+node *add_front(node *front, char *city, char *state, int pop)
+{
+  // TODO: FILL THIS OUT
+}
+
+/*
+ * print_population 
+ *
+ * Arguments: pointer to hash table, str string, hash table size, hash by city or state
+ */
+void print_population(node **htable, char *str, unsigned long tabsz, int hash_by_city) 
+{
+  /*
+   * TODO: FILL THIS OUT
+   *
+   * Use these format strings as given.
+   *
+   * printf("Unable to find any %s by the name of %s.\n", <arg1>, <arg2> );
+   * printf("Minimum: %d\tMaximum: %d\tAverage: %d\n", <arg1>, <arg2>, <arg3>);
+   */
+}
+
+/*
+ * load_table
+ *
+ * Arguments: pointer to hash table, hash table size, file name, hash by city or state
+ */
+int load_table(node **htable, unsigned long tabsz, char *filename, int hash_by_city)
+{
+  /*
+   * TODO: FILL THIS OUT
+   *
+   * Use these format strings as given
+   *
+   * fprintf(stderr, "load_table duplicate entry: %s %s %d\n", <arg1>, <arg2>, <arg3>);
+   * fprintf(stderr, "load_table could not add %s\n", <arg>);
+   */
+}
+
+/*
  * print_info for debug 
  *
- * Arguments: pointer to a hash table; number of elements
- *
- * Operation: Walks the hash table chain by chain
- * 	      1. Calculates the number of nodes in the table
- *	      2. The longest and shortest chains 
- *	      3. prints this to stderr
+ * Arguments: pointer to a hash table, number of elements
  */      
 void print_info(node **htable, unsigned long tabsz)
 {
@@ -274,11 +249,6 @@ void print_info(node **htable, unsigned long tabsz)
  * delete_table
  *
  * Arguments: pointer to hashtable, hash table array size
- *
- * Operation: frees all the memory allocated while creating linked lists for each entry in the hash table. 
- * 	      Finally, it frees the memory allocated for the hash table itself. 
- *	          
- *            	  
  */
 void delete_table(node **htable, unsigned long tabsz)
 {
