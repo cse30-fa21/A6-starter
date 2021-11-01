@@ -237,6 +237,8 @@ bool parse_opts(
 				break;
 			case '?':
 				fprintf(stderr, "%s: unknown option -%c\n", argv[0], optopt);
+				fail = true;
+				break;
 			default:
 				fail = true;
 				break;
