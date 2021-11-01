@@ -220,6 +220,8 @@ int load_table(node **htable, unsigned long tabsz, char *filename, int hash_by_c
    *
    * Use these format strings as given
    *
+   * perror("load_table filename open");
+   * perror("load_table malloc");
    * fprintf(stderr, "load_table duplicate entry: %s %s %d\n", <arg1>, <arg2>, <arg3>);
    * fprintf(stderr, "load_table could not add %s\n", <arg>);
    */
