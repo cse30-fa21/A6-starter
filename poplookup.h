@@ -3,12 +3,12 @@
 /*
  * Constants
  */
-#define LINESZ 1024	    // array size for reading with fgets
-#define TABLE_SIZE 1873 // default hash table elements
-#define MINTABSZ 3      // Smallest allowable has table size
-#define CITYNAMESZ 100  // Buffer size for reading city names from file
-#define STATENAMESZ 20  // Buffer size for reading state names from file
-#define POPSTRSZ 20     // Buffer size for reading population numbers from file
+#define LINE_SIZE 1024   // array size for reading with fgets
+#define TABLE_SIZE 1873  // default hash table elements
+#define MIN_TABLE_SIZE 3 // Smallest allowable has table size
+#define CITYNAMESZ 100   // Buffer size for reading city names from file
+#define STATENAMESZ 20   // Buffer size for reading state names from file
+#define POPSTRSZ 20      // Buffer size for reading population numbers from file
 
 /*
  * Hash table chains are of the following type

@@ -169,7 +169,7 @@ int load_table(node **table, unsigned long size, char *filename, int hash_by_cit
  * Operation: parses argv for ALL the allowable flags
  *            -i sets info to 1 (0 otherwise)
  *	          -t set the hash table size after converting the arguement to an unsigned long
- *	              >= MINTABSZ
+ *	              >= MIN_TABLE_SIZE
  *            -c copies the city name to city
  *            -s copies the state name to state
  *            copies the name of the file to filename
@@ -202,7 +202,7 @@ bool parse_opts(
 				break;
 			case 't':
 				errno = 0;
-				if (((*size = strtoul(optarg, &endptr, 10)) < MINTABSZ)
+				if (((*size = strtoul(optarg, &endptr, 10)) < MIN_TABLE_SIZE)
 					|| (errno != 0)
 					|| (*endptr != '\0')
 				) {
@@ -210,7 +210,7 @@ bool parse_opts(
 						stderr,
 						"%s: -t value must be equal or larger than %d\n",
 						argv[0],
-						MINTABSZ
+						MIN_TABLE_SIZE
 					);
 					fail = true;
 				}
