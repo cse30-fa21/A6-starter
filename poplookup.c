@@ -51,9 +51,7 @@ int main(int argc, char *argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	if (info) {
-		print_info(table, size);
-	}
+	if (info) print_info(table, size);
 
 	if (hash_by_city) {
 		print_population(table, city, size, hash_by_city);
@@ -64,6 +62,106 @@ int main(int argc, char *argv[]) {
 	delete_table(table, size);
 
 	return EXIT_SUCCESS;
+}
+
+/*
+ * !!! DO NOT EDIT THIS FUNCTION !!!
+ * parse_opts
+ *
+ * Arguments: argc, argv, pointer to filename, pointer to hash table size, pointer to info flag,
+ *            pointer to city name, pointer to state name, pointer to hash_by_city
+ *
+ * Operation: parses argv for ALL the allowable flags
+ *            -i sets info to 1 (0 otherwise)
+ *	          -t set the hash table size after converting the arguement to an unsigned long
+ *	              >= MIN_TABLE_SIZE
+ *            -c copies the city name to city
+ *            -s copies the state name to state
+ *            copies the name of the file to filename
+ * returns:   true if success and false otherwise
+ * !!! DO NOT EDIT THIS FUNCTION !!!
+ */
+bool parse_opts(
+	int argc,
+	char* argv[],
+	char** filename,
+	unsigned long* size,
+	bool* info,
+	char** city,
+	char** state,
+	bool *hash_by_city
+) {
+	int opt;
+	char *endptr;
+	bool fail = false;
+	extern int errno;
+
+	opterr = 0;
+	*filename = NULL;
+	*city = NULL;
+	*state = NULL;
+	while ((opt = getopt(argc, argv, "it:c:s:")) != -1) {
+		switch (opt) {
+			case 'i':
+				*info = true;
+				break;
+			case 't':
+				errno = 0;
+				if (((*size = strtoul(optarg, &endptr, 10)) < MIN_TABLE_SIZE)
+					|| (errno != 0)
+					|| (*endptr != '\0')
+				) {
+					fprintf(
+						stderr,
+						"%s: -t value must be equal or larger than %d\n",
+						argv[0],
+						MIN_TABLE_SIZE
+					);
+					fail = true;
+				}
+				break;
+			case 'c':
+				if (*hash_by_city) {
+					*city = optarg;
+					*hash_by_city = 1;
+				} else {
+					fprintf(stderr, "%s: Cannot query both a city and a state\n", argv[0]);
+					fail = true;
+				}
+				break;
+			case 's':
+				if (*hash_by_city) {
+					*state = optarg;
+					*hash_by_city = 0;
+				} else {
+					fprintf(stderr, "%s: Cannot query both a city and a state\n", argv[0]);
+					fail = true;
+				}
+				break;
+			case '?':
+				fprintf(stderr, "%s: unknown option -%c\n", argv[0], optopt);
+				fail = true;
+				break;
+			default:
+				fail = true;
+				break;
+		}
+	}
+
+	*filename = argv[optind];
+	if (*filename == NULL) {
+		fprintf(stderr, "%s: filename is required\n", argv[0]);
+		fail = true;
+	}
+	if (*city == NULL && *state == NULL) {
+		fprintf(stderr, "%s: -c city or -s state is required\n", argv[0]);
+		fail = true;
+	}
+	if (fail) {
+		fprintf(stderr, "Usage: %s [-i] [-t tablesize] [-c city]/[-s state] filename\n", argv[0]);
+	}
+
+	return !fail;
 }
 
 /*
@@ -177,106 +275,6 @@ int load_table(node **table, unsigned long size, char *filename, bool hash_by_ci
 	(void) filename;
 	(void) hash_by_city;
 	return 1;
-}
-
-/*
- * !!! DO NOT EDIT THIS FUNCTION !!!
- * parse_opts
- *
- * Arguments: argc, argv, pointer to filename, pointer to hash table size, pointer to info flag,
- *            pointer to city name, pointer to state name, pointer to hash_by_city
- *
- * Operation: parses argv for ALL the allowable flags
- *            -i sets info to 1 (0 otherwise)
- *	          -t set the hash table size after converting the arguement to an unsigned long
- *	              >= MIN_TABLE_SIZE
- *            -c copies the city name to city
- *            -s copies the state name to state
- *            copies the name of the file to filename
- * returns:   true if success and false otherwise
- * !!! DO NOT EDIT THIS FUNCTION !!!
- */
-bool parse_opts(
-	int argc,
-	char* argv[],
-	char** filename,
-	unsigned long* size,
-	bool* info,
-	char** city,
-	char** state,
-	bool *hash_by_city
-) {
-	int opt;
-	char *endptr;
-	bool fail = false;
-	extern int errno;
-
-	opterr = 0;
-	*filename = NULL;
-	*city = NULL;
-	*state = NULL;
-	while ((opt = getopt(argc, argv, "it:c:s:")) != -1) {
-		switch (opt) {
-			case 'i':
-				*info = true;
-				break;
-			case 't':
-				errno = 0;
-				if (((*size = strtoul(optarg, &endptr, 10)) < MIN_TABLE_SIZE)
-					|| (errno != 0)
-					|| (*endptr != '\0')
-				) {
-					fprintf(
-						stderr,
-						"%s: -t value must be equal or larger than %d\n",
-						argv[0],
-						MIN_TABLE_SIZE
-					);
-					fail = true;
-				}
-				break;
-			case 'c':
-				if (*hash_by_city) {
-					*city = optarg;
-					*hash_by_city = 1;
-				} else {
-					fprintf(stderr, "%s: Cannot query both a city and a state\n", argv[0]);
-					fail = true;
-				}
-				break;
-			case 's':
-				if (*hash_by_city) {
-					*state = optarg;
-					*hash_by_city = 0;
-				} else {
-					fprintf(stderr, "%s: Cannot query both a city and a state\n", argv[0]);
-					fail = true;
-				}
-				break;
-			case '?':
-				fprintf(stderr, "%s: unknown option -%c\n", argv[0], optopt);
-				fail = true;
-				break;
-			default:
-				fail = true;
-				break;
-		}
-	}
-
-	*filename = argv[optind];
-	if (*filename == NULL) {
-		fprintf(stderr, "%s: filename is required\n", argv[0]);
-		fail = true;
-	}
-	if (*city == NULL && *state == NULL) {
-		fprintf(stderr, "%s: -c city or -s state is required\n", argv[0]);
-		fail = true;
-	}
-	if (fail) {
-		fprintf(stderr, "Usage: %s [-i] [-t tablesize] [-c city]/[-s state] filename\n", argv[0]);
-	}
-
-	return !fail;
 }
 
 /*
