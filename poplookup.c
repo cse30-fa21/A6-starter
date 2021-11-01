@@ -227,6 +227,7 @@ void print_population(node** table, char* str, unsigned long size, bool hash_by_
 	 * printf("Unable to find any %s by the name of %s.\n", <arg1>, <arg2>);
 	 * printf("Minimum: %d\tMaximum: %d\tAverage: %d\n", <arg1>, <arg2>, <arg3>);
 	 */
+	// TODO: delete suppression below and implement function
 	// suppresses warnings before implementation
 	(void) table;
 	(void) str;
@@ -249,6 +250,7 @@ bool load_table(node** table, unsigned long size, char* filename, bool hash_by_c
 	 * fprintf(stderr, "load_table duplicate entry: %s %s %d\n", <arg1>, <arg2>, <arg3>);
 	 * fprintf(stderr, "load_table could not add %s\n", <arg>);
 	 */
+	// TODO: delete suppression below and implement function
 	// suppresses warnings before implementation
 	(void) table;
 	(void) size;
@@ -273,6 +275,7 @@ void print_info(node **table, unsigned long size) {
 	 * printf("Shortest chain: %lu\n", <arg>);
 	 * printf("Empty buckets: %lu\n", <arg>);
 	 */
+	// TODO: delete suppression below and implement function
 	// suppresses warnings before implementation
 	(void) table;
 	(void) size;
