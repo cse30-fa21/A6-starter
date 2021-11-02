@@ -9,7 +9,6 @@
 #include <errno.h>
 #include <getopt.h>
 #include <limits.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,11 +31,11 @@ int main(int argc, char *argv[]) {
 	unsigned long size = TABLE_SIZE;
 	// name of csv file
 	char* filename;
-	bool info = false;
+	int info = 0;
 	char* city;
 	char* state;
 	// indicates if the hash is to be done by city or state
-	bool hash_by_city = true;
+	int hash_by_city = 1;
 
 	if (!parse_opts(argc, argv, &filename, &size, &info, &city, &state, &hash_by_city)) {
 		return EXIT_FAILURE;
@@ -78,22 +77,22 @@ int main(int argc, char *argv[]) {
  *            -c copies the city name to city
  *            -s copies the state name to state
  *            copies the name of the file to filename
- * returns:   true if success and false otherwise
+ * returns:   1 if success and 0 otherwise
  * !!! DO NOT EDIT THIS FUNCTION !!!
  */
-bool parse_opts(
+int parse_opts(
 	int argc,
 	char* argv[],
 	char** filename,
 	unsigned long* size,
-	bool* info,
+	int* info,
 	char** city,
 	char** state,
-	bool *hash_by_city
+	int *hash_by_city
 ) {
 	int opt;
 	char *endptr;
-	bool fail = false;
+	int fail = 0;
 	extern int errno;
 
 	opterr = 0;
@@ -103,7 +102,7 @@ bool parse_opts(
 	while ((opt = getopt(argc, argv, "it:c:s:")) != -1) {
 		switch (opt) {
 			case 'i':
-				*info = true;
+				*info = 1;
 				break;
 			case 't':
 				errno = 0;
@@ -117,7 +116,7 @@ bool parse_opts(
 						argv[0],
 						MIN_TABLE_SIZE
 					);
-					fail = true;
+					fail = 1;
 				}
 				break;
 			case 'c':
@@ -126,7 +125,7 @@ bool parse_opts(
 					*hash_by_city = 1;
 				} else {
 					fprintf(stderr, "%s: Cannot query both a city and a state\n", argv[0]);
-					fail = true;
+					fail = 1;
 				}
 				break;
 			case 's':
@@ -135,15 +134,15 @@ bool parse_opts(
 					*hash_by_city = 0;
 				} else {
 					fprintf(stderr, "%s: Cannot query both a city and a state\n", argv[0]);
-					fail = true;
+					fail = 1;
 				}
 				break;
 			case '?':
 				fprintf(stderr, "%s: unknown option -%c\n", argv[0], optopt);
-				fail = true;
+				fail = 1;
 				break;
 			default:
-				fail = true;
+				fail = 1;
 				break;
 		}
 	}
@@ -151,11 +150,11 @@ bool parse_opts(
 	*filename = argv[optind];
 	if (*filename == NULL) {
 		fprintf(stderr, "%s: filename is required\n", argv[0]);
-		fail = true;
+		fail = 1;
 	}
 	if (*city == NULL && *state == NULL) {
 		fprintf(stderr, "%s: -c city or -s state is required\n", argv[0]);
-		fail = true;
+		fail = 1;
 	}
 	if (fail) {
 		fprintf(stderr, "Usage: %s [-i] [-t tablesize] [-c city]/[-s state] filename\n", argv[0]);
@@ -219,7 +218,7 @@ node* add_front(node* front, char* city, char* state, int pop) {
  *
  * Arguments: pointer to hash table, str string, hash table size, hash by city or state
  */
-void print_population(node** table, char* str, unsigned long size, bool hash_by_city) {
+void print_population(node** table, char* str, unsigned long size, int hash_by_city) {
 	// TODO: delete body below and implement function
 	/*
 	 * Use these format strings as given.
@@ -240,7 +239,7 @@ void print_population(node** table, char* str, unsigned long size, bool hash_by_
  *
  * Arguments: pointer to hash table, hash table size, file name, hash by city or state
  */
-bool load_table(node** table, unsigned long size, char* filename, bool hash_by_city) {
+int load_table(node** table, unsigned long size, char* filename, int hash_by_city) {
 	// TODO: delete body below and implement function
 	/*
 	 * Use these format strings as given
@@ -256,7 +255,7 @@ bool load_table(node** table, unsigned long size, char* filename, bool hash_by_c
 	(void) size;
 	(void) filename;
 	(void) hash_by_city;
-	return false;
+	return 0;
 }
 
 /*
