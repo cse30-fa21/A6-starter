@@ -1,5 +1,3 @@
-#include <stdbool.h>
-
 /*
  * Constants
  */
@@ -17,20 +15,20 @@ typedef struct node {
 	struct node* next;
 } node;
 
-extern void print_population(node **table, char *str, unsigned long size, bool hash_by_city);
+extern void print_population(node **table, char *str, unsigned long size, int hash_by_city);
 extern node *node_lookup(node *front, char *city, char *state, int pop);
 extern node *add_front(node *front, char *city, char *state, int pop);
 extern unsigned long hash(char *str);
 extern void print_info(node **table, unsigned long size);
-extern bool parse_opts(
+extern int parse_opts(
 	int argc,
 	char *argv[],
 	char **filename,
 	unsigned long *size,
-	bool *info,
+	int *info,
 	char **city,
 	char **state,
-	bool *hash_by_city
+	int *hash_by_city
 );
-extern bool load_table(node **table, unsigned long size, char *filename, bool hash_by_city);
+extern int load_table(node **table, unsigned long size, char *filename, int hash_by_city);
 extern void delete_table(node **table, unsigned long size);
