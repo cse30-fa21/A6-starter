@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	if (!load_table(table, size, filename, hash_by_city)) {
+	if (load_table(table, size, filename, hash_by_city)) {
 		return EXIT_FAILURE;
 	}
 
