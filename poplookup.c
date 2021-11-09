@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 	char* city;
 	char* state;
 	// indicates if the hash is to be done by city or state
-	int hash_by_city = 1;
+	int hash_by_city = -1;
 
 	if (!parse_opts(argc, argv, &filename, &size, &info, &city, &state, &hash_by_city)) {
 		return EXIT_FAILURE;
@@ -120,7 +120,7 @@ int parse_opts(
 				}
 				break;
 			case 'c':
-				if (*hash_by_city) {
+				if (*hash_by_city == -1) {
 					*city = optarg;
 					*hash_by_city = 1;
 				} else {
@@ -129,7 +129,7 @@ int parse_opts(
 				}
 				break;
 			case 's':
-				if (*hash_by_city) {
+				if (*hash_by_city == -1) {
 					*state = optarg;
 					*hash_by_city = 0;
 				} else {
